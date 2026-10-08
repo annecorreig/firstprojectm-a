@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- HEAD: same set-up as every page (see index.html for details) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The main M&A valuation methods explained: DCF, comparable companies, precedent transactions, LBO and asset-based valuation.">
+  <title>Valuation Methods · M&amp;A Valuation Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- HEADER + NAVIGATION (identical on every page; "Methods" is highlighted) -->
+  <header class="site-header">
+    <nav class="container nav-bar" aria-label="Main navigation">
+      <a href="index.html" class="logo">M&amp;A <span class="logo-accent">Valuation</span> Lab</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="methods.html" aria-current="page">Methods</a></li>
+        <li><a href="calculators.html">Calculators</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO: page title -->
+    <section class="hero">
+      <div class="container">
+        <h1>Valuation Methods</h1>
+        <p>Five ways to value a company. Each answers the question "what is it worth?" from a different angle.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- In-page menu: each link jumps to a section further down via its id -->
+        <ul class="page-nav">
+          <li><a href="#dcf">DCF</a></li>
+          <li><a href="#comps">Comparable companies</a></li>
+          <li><a href="#precedents">Precedent transactions</a></li>
+          <li><a href="#lbo">LBO</a></li>
+          <li><a href="#asset-based">Asset-based</a></li>
+          <li><a href="#comparison">Comparison table</a></li>
+          <li><a href="#evaluating">Evaluating the process</a></li>
+        </ul>
+
+        <!-- Key idea used by all methods: EV vs equity value -->
+        <div class="callout">
+          <p><strong>Key idea: enterprise value vs. equity value.</strong> <em>Enterprise value (EV)</em> is the value of the whole business, owed to both lenders and shareholders. <em>Equity value</em> is the part that belongs to shareholders only.</p>
+          <p><code>Equity value = Enterprise value − Net debt</code>, where <code>Net debt = Debt − Cash</code>.</p>
+        </div>
+
+        <!-- ========================================================
+             METHOD 1: DISCOUNTED CASH FLOW (DCF)
+             ======================================================== -->
+        <article class="method card" id="dcf">
+          <h2>1. Discounted Cash Flow (DCF)</h2>
+          <p><strong>What it is:</strong> A company is worth the cash it will produce in the future, translated into today's money. A dollar received in 5 years is worth less than a dollar today, because you could invest today's dollar and because the future is uncertain. A DCF forecasts <strong>free cash flow</strong> (cash left after running the business and investing in it), then <em>discounts</em> each year back to today.</p>
+          <p><strong>When to use it:</strong> For businesses with fairly predictable cash flows. It's the core "intrinsic" method because it doesn't depend on market mood.</p>
+
+          <h3>The discount rate: WACC</h3>
+          <p>Cash flows are discounted at the <strong>weighted average cost of capital (WACC)</strong>, the average return that lenders and shareholders together expect. The cost of equity is usually estimated with the <strong>CAPM</strong>. Debt is cheaper because interest is tax-deductible.</p>
+          <div class="formula">Cost of equity (CAPM) = Risk-free rate + Beta × Market risk premium
+
+WACC = E/(D+E) × Cost of equity + D/(D+E) × Cost of debt × (1 − Tax rate)</div>
+
+          <h3>Terminal value: the value after the forecast</h3>
+          <p>We can't forecast forever, so after year 5 (or 10) we estimate a single <strong>terminal value</strong> for all the years beyond. It often makes up 60 to 80% of the total, so it deserves care. There are two ways to calculate it:</p>
+          <div class="formula">Gordon growth:   TV = FCF(last year) × (1 + g) / (WACC − g)
+Exit multiple:   TV = EBITDA(last year) × Exit EV/EBITDA multiple
+
+Enterprise value = Σ FCF(t) / (1 + WACC)^t  +  TV / (1 + WACC)^N</div>
+          <p class="muted">g = long-term growth rate (usually 2 to 3%, close to inflation). It must be lower than WACC, or the formula breaks.</p>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✔ Pros</h4>
+              <ul>
+                <li>Based on the company's own fundamentals</li>
+                <li>Can value synergies and different scenarios explicitly</li>
+                <li>Doesn't depend on market mood</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>✘ Cons</h4>
+              <ul>
+                <li>Very sensitive to WACC and growth assumptions</li>
+                <li>Terminal value dominates the result</li>
+                <li>Easy to make optimistic forecasts</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="example">
+            <p><strong>Worked example:</strong> Free cash flow for 3 years is $50M, $55M and $60M. WACC is 10%, g is 2%, and net debt is $150M.</p>
+            <p>PV of cash flows = 50/1.10 + 55/1.10² + 60/1.10³ = 45.5 + 45.5 + 45.1 = <strong>$136.0M</strong></p>
+            <p>Terminal value (Gordon) = 60 × 1.02 / (0.10 − 0.02) = $765.0M → PV = 765 / 1.10³ = <strong>$574.8M</strong></p>
+            <p>Enterprise value = 136.0 + 574.8 = <strong>$710.7M</strong>. Equity value = 710.7 − 150 = <strong>$560.7M</strong>.</p>
+            <p>Using an exit multiple instead (year-3 EBITDA of $90M × 8x = $720M, PV $541.0M) gives EV = <strong>$676.9M</strong>, so the two terminal methods roughly agree.</p>
+            <p><a href="calculators.html#dcf">Try the DCF calculator →</a></p>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             METHOD 2: COMPARABLE COMPANY ANALYSIS (TRADING COMPS)
+             ======================================================== -->
+        <article class="method card" id="comps">
+          <h2>2. Comparable Company Analysis (trading comps)</h2>
+          <p><strong>What it is:</strong> Value the target the way the stock market values similar listed companies ("peers"). We calculate <strong>valuation multiples</strong> for the peers and apply them to the target's own figures.</p>
+          <p><strong>When to use it:</strong> Almost always, as a market reality check. It's most useful when there are several truly similar listed companies.</p>
+          <div class="formula">EV / EBITDA   → Implied EV     = Target EBITDA × Peer multiple
+EV / Revenue  → Implied EV     = Target revenue × Peer multiple   (for loss-making / fast growers)
+P / E         → Implied equity = Target net income × Peer multiple</div>
+          <p class="muted">Rule: EV multiples give enterprise value. P/E gives equity value directly. Don't mix them up.</p>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✔ Pros</h4>
+              <ul>
+                <li>Quick and based on real market prices</li>
+                <li>Easy to explain to boards and investors</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>✘ Cons</h4>
+              <ul>
+                <li>Truly comparable peers are rare</li>
+                <li>If the whole market is overpriced, so is your answer</li>
+                <li>Prices of small stock trades don't include a control premium</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="example">
+            <p><strong>Worked example:</strong> TargetCo's EBITDA is $80M. Four peers trade at 8.0x, 9.5x, 10.0x and 11.5x EV/EBITDA, so the median is 9.75x.</p>
+            <p>Implied EV range: 8.0 × 80 = <strong>$640M</strong> (low), 9.75 × 80 = <strong>$780M</strong> (median), 11.5 × 80 = <strong>$920M</strong> (high).</p>
+            <p><a href="calculators.html#comps">Try the multiples calculator →</a></p>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             METHOD 3: PRECEDENT TRANSACTIONS
+             ======================================================== -->
+        <article class="method card" id="precedents">
+          <h2>3. Precedent Transactions</h2>
+          <p><strong>What it is:</strong> Look at what buyers actually paid for similar companies in past acquisitions, and apply those deal multiples to the target.</p>
+          <p><strong>Why it includes a control premium:</strong> Trading comps are based on prices for buying a <em>few shares</em>. Precedent deals are based on prices for buying the <em>whole company</em>, which gives full control over strategy, cash and management. Buyers pay extra for that control, and often share some expected synergies with the seller. So precedent multiples are usually <strong>higher</strong> than trading multiples.</p>
+          <p><strong>When to use it:</strong> In any acquisition, to see what "the going rate" for control has been in the industry.</p>
+          <div class="formula">Implied EV = Target EBITDA × Median EV/EBITDA paid in past deals</div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✔ Pros</h4>
+              <ul>
+                <li>Reflects real prices paid for control</li>
+                <li>Shows what the seller may expect</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>✘ Cons</h4>
+              <ul>
+                <li>Old deals happened in different markets</li>
+                <li>Every deal has unique synergies and circumstances</li>
+                <li>Data on private deals is often limited</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="example">
+            <p><strong>Worked example:</strong> Three recent deals in the industry were priced at 10x, 11x and 13x EBITDA. Using the median of 11x: 11 × $80M = <strong>$880M</strong>. That's about 13% above the trading-comps median of $780M. The difference is roughly the control premium.</p>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             METHOD 4: LEVERAGED BUYOUT (LBO)
+             ======================================================== -->
+        <article class="method card" id="lbo">
+          <h2>4. Leveraged Buyout (LBO) analysis</h2>
+          <p><strong>What it is (simplified):</strong> An LBO asks: <em>"What is the most a private equity firm could pay and still earn its target return?"</em> The firm buys the company using mostly borrowed money, pays the debt down with the company's cash flow, and sells after about 5 years. Because the debt shrinks, the owners' share of the company grows.</p>
+          <p><strong>When to use it:</strong> When private equity firms might be competing bidders. The LBO value acts as a "floor" price that a financial buyer could pay.</p>
+          <div class="formula">Equity at exit   = Exit EV − Remaining debt
+Money multiple   = Equity at exit / Equity invested
+IRR              = Money multiple^(1 / years) − 1</div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✔ Pros</h4>
+              <ul>
+                <li>Shows what a financial buyer can afford</li>
+                <li>Makes the effect of debt clear</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>✘ Cons</h4>
+              <ul>
+                <li>Ignores strategic synergies, so it often gives a lower value</li>
+                <li>Depends on how much lenders will lend</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="example">
+            <p><strong>Worked example:</strong> A PE firm buys TargetCo for 8x EBITDA of $80M = $640M, funded with $384M of debt (60%) and $256M of equity (40%). After 5 years, EBITDA is $100M and it sells at 8x = $800M. Debt has been paid down to $200M.</p>
+            <p>Equity at exit = 800 − 200 = $600M. Money multiple = 600 / 256 = <strong>2.34x</strong>. IRR = 2.34^(1/5) − 1 ≈ <strong>18.6%</strong> a year. If the firm needs 20%, it would have to pay a bit less than $640M.</p>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             METHOD 5: ASSET-BASED VALUATION
+             ======================================================== -->
+        <article class="method card" id="asset-based">
+          <h2>5. Asset-based valuation</h2>
+          <p><strong>What it is:</strong> Value the company as the <strong>fair market value of everything it owns, minus everything it owes</strong>. The book values on the balance sheet are adjusted to realistic market values, for example property bought 20 years ago is revalued to today's price.</p>
+          <p><strong>When to use it:</strong> For asset-heavy businesses (real estate, shipping, banks, holding companies), for companies in distress, or as a "floor" value in liquidation.</p>
+          <div class="formula">Net asset value = Fair value of assets − Fair value of liabilities</div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✔ Pros</h4>
+              <ul>
+                <li>Based on tangible, checkable items</li>
+                <li>Good minimum value ("floor")</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>✘ Cons</h4>
+              <ul>
+                <li>Misses intangibles: brand, customers, know-how</li>
+                <li>Undervalues healthy, growing companies</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="example">
+            <p><strong>Worked example:</strong> TargetCo's assets have a book value of $750M. Revaluing its land and factories raises this to a fair value of <strong>$900M</strong>. Liabilities are $500M. Net asset value = 900 − 500 = <strong>$400M</strong> of equity value. That's much lower than the other methods, because it ignores TargetCo's customer relationships and earning power.</p>
+          </div>
+        </article>
+
+        <!-- ========================================================
+             COMPARISON TABLE
+             The wrapper lets the table scroll sideways on phones.
+             ======================================================== -->
+        <section class="method" id="comparison">
+          <h2>Comparison of all methods</h2>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Based on</th>
+                  <th>Includes control premium?</th>
+                  <th>Best for</th>
+                  <th>Biggest weakness</th>
+                  <th>Typical result</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>DCF</strong></td>
+                  <td>Future cash flows</td>
+                  <td>No (unless synergies added)</td>
+                  <td>Stable, predictable businesses</td>
+                  <td>Sensitive to assumptions</td>
+                  <td>Wide range</td>
+                </tr>
+                <tr>
+                  <td><strong>Trading comps</strong></td>
+                  <td>Stock market prices of peers</td>
+                  <td>No</td>
+                  <td>Market reality check</td>
+                  <td>Few true peers</td>
+                  <td>Lower</td>
+                </tr>
+                <tr>
+                  <td><strong>Precedent transactions</strong></td>
+                  <td>Prices paid in past deals</td>
+                  <td>Yes</td>
+                  <td>Setting expectations for an acquisition price</td>
+                  <td>Old or not comparable deals</td>
+                  <td>Higher</td>
+                </tr>
+                <tr>
+                  <td><strong>LBO</strong></td>
+                  <td>Debt capacity + target return</td>
+                  <td>Partly</td>
+                  <td>Price a financial buyer can pay</td>
+                  <td>Ignores synergies</td>
+                  <td>Floor for strategic buyers</td>
+                </tr>
+                <tr>
+                  <td><strong>Asset-based</strong></td>
+                  <td>Balance sheet at fair value</td>
+                  <td>No</td>
+                  <td>Asset-heavy or distressed firms</td>
+                  <td>Misses intangibles</td>
+                  <td>Lowest (floor)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ========================================================
+             EVALUATING THE PROCESS: biases and why several methods
+             ======================================================== -->
+        <section class="method" id="evaluating">
+          <h2>Evaluating the process: where valuations go wrong</h2>
+          <p>Research has repeatedly found that many acquisitions destroy value for the <em>buyer's</em> shareholders, while the <em>seller's</em> shareholders usually do well. This is rarely because of maths errors. It's usually because of human biases:</p>
+
+          <div class="card-grid">
+            <div class="card">
+              <h3>📈 Optimistic projections</h3>
+              <p>Management teams and advisers are paid when deals happen, so forecasts tend to drift upward. Each small optimistic assumption (growth, margins, timing) compounds into a much bigger value. <strong>Remedy:</strong> compare forecasts with the company's actual history and run a downside case.</p>
+            </div>
+            <div class="card">
+              <h3>🤝 Overpaying for synergies</h3>
+              <p>If the buyer pays a premium equal to <em>all</em> expected synergies, the seller captures all the value, and the buyer carries all the risk that synergies never appear. <strong>Remedy:</strong> discount synergies by their probability, subtract integration costs, and only give away part of them in the premium.</p>
+            </div>
+            <div class="card">
+              <h3>🏆 The winner's curse</h3>
+              <p>In an auction, bidders' estimates are spread out around the true value. The winner is often the bidder who overestimated the most, so "winning" often means overpaying. <strong>Remedy:</strong> set a walk-away price before bidding starts, and stick to it.</p>
+            </div>
+            <div class="card">
+              <h3>⚓ Anchoring and confirmation bias</h3>
+              <p>Once a number is mentioned (for example the seller's asking price), people adjust insufficiently away from it, and they look for evidence that supports the deal they want. <strong>Remedy:</strong> ask an independent team to challenge the case for the deal.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <p><strong>Why use several methods together?</strong> Each method has a different blind spot. DCF depends on your assumptions, comps depend on market mood, precedents depend on past conditions, the LBO ignores synergies, and asset-based valuation ignores intangibles. If several independent methods land in a similar range, you can trust that range more. If they disagree, the gap tells you what to investigate. That's the purpose of the <a href="calculators.html#football-field">football field chart</a>.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (identical on every page) -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="disclaimer">For educational purposes only. Not financial advice.</p>
+      <p>© <span id="current-year">2026</span> M&amp;A Valuation Lab · All figures on this site are made up for teaching.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

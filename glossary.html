@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- HEAD: same set-up as every page (see index.html for details) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plain-English glossary of M&A valuation terms with instant search.">
+  <title>Glossary · M&amp;A Valuation Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- main.js contains setupGlossarySearch(), which powers the search box -->
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- HEADER + NAVIGATION (identical on every page; "Glossary" is highlighted) -->
+  <header class="site-header">
+    <nav class="container nav-bar" aria-label="Main navigation">
+      <a href="index.html" class="logo">M&amp;A <span class="logo-accent">Valuation</span> Lab</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="methods.html">Methods</a></li>
+        <li><a href="calculators.html">Calculators</a></li>
+        <li><a href="glossary.html" aria-current="page">Glossary</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO: page title -->
+    <section class="hero">
+      <div class="container">
+        <h1>Glossary</h1>
+        <p>Key M&amp;A and valuation terms in plain English. Start typing to filter.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- ========================================================
+             SEARCH BOX
+             main.js listens to this box (by its id "glossary-search")
+             and hides terms that don't match what is typed.
+             ======================================================== -->
+        <label for="glossary-search"><strong>Search terms</strong></label><br>
+        <input type="search" id="glossary-search" class="search-box" placeholder="e.g. WACC, premium, debt…" autocomplete="off">
+        <!-- aria-live makes screen readers announce the updated count -->
+        <p id="glossary-count" class="muted" aria-live="polite">Showing all terms</p>
+        <p id="glossary-no-results" class="hidden">No terms match your search. Try a shorter word.</p>
+
+        <!-- ========================================================
+             TERM LIST
+             A <dl> (description list) is the HTML element made for
+             term + definition pairs. Each term is wrapped in a <div
+             class="glossary-item"> so JavaScript can hide or show the
+             whole pair at once.
+             To ADD A TERM: copy one <div class="glossary-item"> block,
+             paste it in alphabetical order and change the text.
+             ======================================================== -->
+        <dl class="glossary-list">
+          <div class="glossary-item">
+            <dt>Accretion</dt>
+            <dd>When a deal <strong>increases</strong> the buyer's earnings per share (EPS). This happens when the target's earnings are larger than the cost of paying for it (interest on new debt plus the effect of new shares).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Asset-based valuation</dt>
+            <dd>Valuing a company as the fair value of its assets minus its liabilities. Often used as a minimum ("floor") value.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Beta (β)</dt>
+            <dd>A measure of how much a stock moves compared with the overall market. A beta of 1.2 means it tends to move 20% more than the market, so it is riskier and investors expect a higher return.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>CAPM (Capital Asset Pricing Model)</dt>
+            <dd>A formula to estimate the cost of equity: risk-free rate + beta × market risk premium.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Capital expenditure (Capex)</dt>
+            <dd>Money spent on long-term assets such as machinery, buildings or IT systems. It is subtracted when calculating free cash flow.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Closing</dt>
+            <dd>The moment the deal legally completes: the money and shares change hands and the buyer takes ownership.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Comparable company analysis (trading comps)</dt>
+            <dd>Valuing a company using the valuation multiples of similar listed companies.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Control premium</dt>
+            <dd>The extra amount above the current market price that a buyer pays to gain control of a company. It is typically 20 to 40% for public companies.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Cost of debt</dt>
+            <dd>The interest rate a company pays on its borrowing. Because interest is tax-deductible, the after-tax cost is cost of debt × (1 − tax rate).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Cost of equity</dt>
+            <dd>The return shareholders expect for the risk of owning the company's shares. It is usually estimated with the CAPM.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Discounted cash flow (DCF)</dt>
+            <dd>A valuation method that forecasts future free cash flows and converts them into today's value using a discount rate (usually WACC).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Dilution</dt>
+            <dd>When a deal <strong>reduces</strong> the buyer's earnings per share. It is common when many new shares are issued or the target earns little relative to the price.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Due diligence</dt>
+            <dd>The detailed investigation of a target's finances, contracts, legal issues, customers and operations before signing a deal.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Earn-out</dt>
+            <dd>Part of the price that is paid later, only if the acquired business reaches agreed targets. It helps bridge disagreements about the forecasts.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>EBITDA</dt>
+            <dd>Earnings Before Interest, Taxes, Depreciation and Amortization. A rough measure of operating profit before financing and accounting choices, widely used in multiples.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Enterprise value (EV)</dt>
+            <dd>The value of the entire business, belonging to both lenders and shareholders. EV = equity value + net debt.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>EPS (Earnings per share)</dt>
+            <dd>Net income divided by the number of shares outstanding.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Equity value</dt>
+            <dd>The value belonging to shareholders only. Equity value = enterprise value − net debt. For a listed company, this is its market capitalization.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Exit multiple</dt>
+            <dd>A valuation multiple (often EV/EBITDA) used to estimate the terminal value, or the sale price of a company in an LBO.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Fairness opinion</dt>
+            <dd>A letter from an independent financial adviser stating that a deal's price is fair, from a financial point of view, to the shareholders.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Football field chart</dt>
+            <dd>A horizontal bar chart showing the valuation range from each method side by side, used to settle on an overall range.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Free cash flow (FCF)</dt>
+            <dd>Cash generated by the business after operating costs, taxes, capex and working-capital needs. It is the cash available to pay lenders and shareholders.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Gordon growth model</dt>
+            <dd>A way to calculate terminal value that assumes cash flows grow at a constant rate forever: FCF × (1 + g) / (WACC − g).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Integration costs</dt>
+            <dd>One-off costs to combine two companies, such as severance, IT systems and rebranding. They reduce the net value of synergies.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>IRR (Internal rate of return)</dt>
+            <dd>The annual return an investment earns. Private equity firms often target an IRR of 20% or more.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Leveraged buyout (LBO)</dt>
+            <dd>Buying a company using a large amount of borrowed money, which is repaid from the company's own cash flow. Typically done by private equity firms.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Market risk premium</dt>
+            <dd>The extra return investors expect from the stock market as a whole over a risk-free investment. It is often assumed to be 4 to 6%.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Multiple (valuation multiple)</dt>
+            <dd>A ratio that compares value with a financial figure, for example EV/EBITDA = 10x means the business is valued at 10 times its EBITDA.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Net debt</dt>
+            <dd>Total debt minus cash. It is subtracted from enterprise value to get equity value.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Normalized EBITDA</dt>
+            <dd>EBITDA adjusted to remove one-off or unusual items, so it shows the business's ongoing earning power.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>P/E ratio (Price / Earnings)</dt>
+            <dd>Share price divided by earnings per share. It values equity directly rather than the whole enterprise.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Precedent transactions</dt>
+            <dd>Valuing a company using the multiples paid in past acquisitions of similar companies. These include a control premium.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Risk-free rate</dt>
+            <dd>The return on an investment with almost no risk of default, usually the yield on long-term government bonds.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Synergies</dt>
+            <dd>Extra value created by combining two companies. <em>Cost synergies</em> are savings, and <em>revenue synergies</em> are extra sales. Cost synergies are usually more reliable.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Terminal value (TV)</dt>
+            <dd>The value of all cash flows after the explicit forecast period in a DCF. It is calculated with the Gordon growth model or an exit multiple.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>WACC (Weighted average cost of capital)</dt>
+            <dd>The blended return expected by all of a company's investors (lenders and shareholders), weighted by how much each contributes. It is used as the discount rate in a DCF.</dd>
+          </div>
+          <div class="glossary-item">
+            <dt>Winner's curse</dt>
+            <dd>In an auction, the winning bidder is often the one who overestimated the value the most, so winning tends to mean overpaying.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (identical on every page) -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="disclaimer">For educational purposes only. Not financial advice.</p>
+      <p>© <span id="current-year">2026</span> M&amp;A Valuation Lab · All figures on this site are made up for teaching.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

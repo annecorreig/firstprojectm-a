@@ -1,0 +1,842 @@
+/* =====================================================================
+   M&A VALUATION LAB — MAIN STYLESHEET
+   ---------------------------------------------------------------------
+   This ONE file styles every page of the site. It is organised top to
+   bottom like this:
+     1. Theme colours (CSS variables)  <- change these to re-theme the site
+     2. Dark mode colours
+     3. Base / reset styles
+     4. Header and navigation (including the mobile hamburger menu)
+     5. Page layout helpers (hero, sections, cards, grids)
+     6. Process timeline
+     7. Methods page (formula boxes, tables, pros/cons)
+     8. Calculators (forms, buttons, results, errors)
+     9. Glossary
+    10. Footer
+    11. Responsive rules for small screens
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   1. THEME COLOURS (CSS VARIABLES)
+   WHAT: Named colours stored in one place on the :root (the <html> tag).
+   WHY:  Every other rule uses var(--name) instead of a raw colour, so
+         changing a value here re-colours the whole site at once.
+   --------------------------------------------------------------------- */
+:root {
+  --color-navy: #0b2545;          /* Main brand colour: header, headings */
+  --color-navy-light: #13315c;    /* Slightly lighter navy for hovers */
+  --color-accent: #0e7c7b;        /* The ONE accent colour: buttons, links, highlights */
+  --color-accent-hover: #0a5f5e;  /* Darker accent for button hover */
+  --color-accent-soft: #e3f2f1;   /* Very light accent for tinted boxes */
+  --color-on-accent: #ffffff;     /* Text placed on top of the accent colour */
+  --color-accent-on-navy: #5fd0ce;/* Brighter accent, readable on the navy header */
+
+  --color-background: #f5f7fa;    /* Page background */
+  --color-surface: #ffffff;       /* Cards, boxes, tables */
+  --color-border: #d9e0e8;        /* Thin lines around boxes */
+
+  --color-text: #1b2533;          /* Normal body text */
+  --color-text-muted: #5b6878;    /* Secondary / helper text */
+  --color-heading: #0b2545;       /* Headings */
+  --color-on-navy: #ffffff;       /* Text placed on top of navy */
+
+  --color-success: #1e7a3c;       /* "Accretive", good results */
+  --color-success-soft: #e6f4ea;
+  --color-error: #b3261e;         /* Error messages, "Dilutive" */
+  --color-error-soft: #fdecea;
+  --color-warning-soft: #fff6e0;  /* "Common mistakes" boxes */
+  --color-warning-border: #e0a800;
+
+  --font-main: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius: 10px;                 /* Corner roundness of boxes */
+  --shadow: 0 2px 8px rgba(11, 37, 69, 0.08);
+  --max-width: 1100px;            /* Widest the content gets on big screens */
+}
+
+
+/* ---------------------------------------------------------------------
+   2. DARK MODE
+   WHAT: If the visitor's computer/phone is set to dark mode, these
+         values replace the ones above automatically.
+   WHY:  prefers-color-scheme is a built-in browser feature, so no
+         JavaScript is needed. We only redefine the variables.
+   --------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-navy: #0a1a30;
+    --color-navy-light: #142b4d;
+    --color-accent: #3fbfbd;
+    --color-accent-hover: #6ad3d1;
+    --color-accent-soft: #11323a;
+    --color-on-accent: #0b1a2b;     /* Dark text: the light teal is too bright for white text */
+    --color-accent-on-navy: #3fbfbd;
+
+    --color-background: #0d1520;
+    --color-surface: #16212f;
+    --color-border: #2a3a4f;
+
+    --color-text: #e4e9f0;
+    --color-text-muted: #9fadbf;
+    --color-heading: #ffffff;
+    --color-on-navy: #ffffff;
+
+    --color-success: #6fd08f;
+    --color-success-soft: #13301f;
+    --color-error: #ff8a80;
+    --color-error-soft: #3a1a1a;
+    --color-warning-soft: #33290f;
+    --color-warning-border: #c99a1a;
+
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+}
+
+
+/* ---------------------------------------------------------------------
+   3. BASE STYLES
+   WHAT: Sensible defaults for all elements.
+   WHY:  Browsers have slightly different built-in styles; this makes
+         them consistent and sets our font and colours.
+   --------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Width includes padding + border: easier maths */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+h1, h2, h3, h4 {
+  color: var(--color-heading);
+  line-height: 1.25;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Code-style formulas inside text */
+code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.92em;
+  background: var(--color-accent-soft);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+/* Keeps content centred and not too wide on large screens */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+
+/* ---------------------------------------------------------------------
+   4. HEADER AND NAVIGATION
+   WHAT: The navy bar at the top of every page.
+   WHY:  Same look on every page so visitors always know where they are.
+   --------------------------------------------------------------------- */
+.site-header {
+  background: var(--color-navy);
+  color: var(--color-on-navy);
+  position: sticky;   /* Header stays visible while scrolling */
+  top: 0;
+  z-index: 10;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+}
+
+/* The site name on the left */
+.logo {
+  color: var(--color-on-navy);
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: var(--color-on-navy);
+}
+
+.logo-accent {
+  color: var(--color-accent-on-navy);
+}
+
+/* The list of page links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  display: block;
+  padding: 8px 14px;
+  color: var(--color-on-navy);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  background: var(--color-navy-light);
+  color: var(--color-on-navy);
+}
+
+/* aria-current="page" marks the link for the page you are on */
+.nav-links a[aria-current="page"] {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* The hamburger button: hidden on desktop, shown on phones (see section 11) */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 2px solid var(--color-on-navy);
+  border-radius: 6px;
+  color: var(--color-on-navy);
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+
+/* ---------------------------------------------------------------------
+   5. PAGE LAYOUT HELPERS
+   WHAT: Reusable pieces: the big intro "hero", sections, cards, grids.
+   WHY:  Writing these once lets every page share the same look.
+   --------------------------------------------------------------------- */
+
+/* Big coloured intro block at the top of each page */
+.hero {
+  background: linear-gradient(135deg, var(--color-navy), var(--color-navy-light));
+  color: var(--color-on-navy);
+  padding: 56px 0 48px;
+}
+
+.hero h1 {
+  color: var(--color-on-navy);
+  font-size: 2.4rem;
+  margin: 0 0 12px;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  max-width: 720px;
+  margin: 0;
+  opacity: 0.92;
+}
+
+/* A normal content section with breathing room */
+.section {
+  padding: 40px 0;
+}
+
+.section h2 {
+  font-size: 1.7rem;
+  margin-top: 0;
+}
+
+/* Text that should look quieter */
+.muted {
+  color: var(--color-text-muted);
+}
+
+/* Responsive grid: as many columns as fit, each at least 260px wide */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* A white box with rounded corners and a soft shadow */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+/* A card that is also a link: lifts slightly on hover */
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.card-link:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-accent);
+  color: inherit;
+}
+
+.card-icon {
+  font-size: 2rem;
+}
+
+/* "Read more →" text at the bottom of a card */
+.card-cta {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Two equal columns (used for buyer vs seller) */
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* A tinted box used for tips and key ideas */
+.callout {
+  background: var(--color-accent-soft);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+
+/* Remove the extra space above the first and below the last paragraph */
+.callout p:first-child {
+  margin-top: 0;
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* Small in-page table of contents */
+.page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.page-nav a {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+
+/* ---------------------------------------------------------------------
+   6. PROCESS TIMELINE
+   WHAT: The vertical numbered timeline on process.html.
+   WHY:  A line with numbered circles shows the steps happen in order.
+   --------------------------------------------------------------------- */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* The vertical line running down the left side */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--color-border);
+}
+
+.timeline-step {
+  position: relative;
+  padding-left: 68px;   /* Room for the numbered circle */
+  margin-bottom: 32px;
+}
+
+/* The numbered circle on the line */
+.step-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--color-background);
+}
+
+.timeline-step h2 {
+  font-size: 1.4rem;
+  margin: 8px 0 12px;
+}
+
+/* "Common mistakes" note */
+.mistake {
+  background: var(--color-warning-soft);
+  border-left: 4px solid var(--color-warning-border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 16px 0;
+}
+
+/* Worked example box */
+.example {
+  background: var(--color-accent-soft);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 16px 0 0;
+}
+
+.mistake p,
+.example p {
+  margin: 4px 0;
+}
+
+
+/* ---------------------------------------------------------------------
+   7. METHODS PAGE
+   WHAT: Formula boxes, pros/cons lists and data tables.
+   --------------------------------------------------------------------- */
+.method {
+  margin-bottom: 40px;
+  scroll-margin-top: 80px; /* So the sticky header doesn't cover the title */
+}
+
+/* Highlighted formula */
+.formula {
+  background: var(--color-navy);
+  color: var(--color-on-navy);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.95rem;
+  padding: 14px 18px;
+  border-radius: 8px;
+  overflow-x: auto;   /* Long formulas scroll inside the box on phones */
+  white-space: pre;
+}
+
+/* Pros and cons side by side */
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pros-cons h4 {
+  margin: 0 0 6px;
+}
+
+.pros h4 {
+  color: var(--color-success);
+}
+
+.cons h4 {
+  color: var(--color-error);
+}
+
+/* Wrapper that lets wide tables scroll sideways on phones */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+/* Data tables used across the site */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid var(--color-border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table th {
+  background: var(--color-navy);
+  color: var(--color-on-navy);
+}
+
+/* Numbers line up better when right-aligned */
+.data-table .number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table tfoot td {
+  font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------------------
+   8. CALCULATORS
+   WHAT: Input forms, the Calculate button, result panels and errors.
+   --------------------------------------------------------------------- */
+.calculator {
+  margin-bottom: 32px;
+  scroll-margin-top: 80px;
+}
+
+/* Grid of labelled inputs: 2-4 columns depending on screen width */
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px 18px;
+  margin: 16px 0;
+}
+
+.input-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 9px 10px;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+/* Visible outline when an input is selected (important for keyboard users) */
+.input-group input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.input-group input:disabled {
+  opacity: 0.5;
+}
+
+/* Small grey hint text under a label */
+.hint {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* A titled group of inputs (e.g. "Year 1 to 5 cash flows") */
+fieldset {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 16px 4px;
+  margin: 16px 0;
+}
+
+legend {
+  font-weight: 700;
+  padding: 0 6px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* The main action button */
+.button {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border: none;
+  border-radius: 8px;
+  padding: 11px 22px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--color-accent-hover);
+  color: var(--color-on-accent);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--color-navy);
+  outline-offset: 2px;
+}
+
+/* Results area: hidden until the visitor clicks Calculate */
+.results {
+  margin-top: 20px;
+}
+
+.results:empty {
+  display: none;
+}
+
+/* Row of big result numbers */
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.result-item {
+  background: var(--color-accent-soft);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.result-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.result-value {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-heading);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Friendly error message box */
+.error-message {
+  background: var(--color-error-soft);
+  color: var(--color-error);
+  border-left: 4px solid var(--color-error);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-weight: 600;
+}
+
+/* Green / red verdict line (e.g. accretive vs dilutive) */
+.verdict {
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+
+.verdict-good {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.verdict-bad {
+  background: var(--color-error-soft);
+  color: var(--color-error);
+}
+
+/* The collapsible "How this works" explanation */
+.how-it-works {
+  margin-top: 16px;
+  border: 1px dashed var(--color-border);
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+
+.how-it-works summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Football field chart canvas */
+.chart-wrapper {
+  margin-top: 16px;
+  width: 100%;
+}
+
+#football-field-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Table of football field inputs (method, low, high) */
+.range-table input {
+  width: 100%;
+  min-width: 90px;
+  padding: 6px 8px;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+
+/* ---------------------------------------------------------------------
+   9. GLOSSARY
+   WHAT: The search box and the list of terms.
+   --------------------------------------------------------------------- */
+.search-box {
+  width: 100%;
+  max-width: 480px;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.glossary-list {
+  margin: 24px 0 0;
+}
+
+/* Each term + definition pair */
+.glossary-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+
+.glossary-item dt {
+  font-weight: 700;
+  color: var(--color-heading);
+  font-size: 1.05rem;
+}
+
+.glossary-item dd {
+  margin: 4px 0 0;
+}
+
+/* Added by JavaScript to terms that don't match the search */
+.hidden {
+  display: none;
+}
+
+
+/* ---------------------------------------------------------------------
+   10. FOOTER
+   --------------------------------------------------------------------- */
+.site-footer {
+  background: var(--color-navy);
+  color: var(--color-on-navy);
+  padding: 24px 0;
+  margin-top: 40px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 4px 0;
+}
+
+.disclaimer {
+  font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------------------
+   11. RESPONSIVE RULES (PHONES AND SMALL TABLETS)
+   WHAT: Changes that apply only when the screen is 760px wide or less.
+   WHY:  Side-by-side layouts become too cramped on phones, so we stack
+         them and swap the link list for a hamburger menu.
+   --------------------------------------------------------------------- */
+@media (max-width: 760px) {
+  body {
+    font-size: 16px;
+  }
+
+  /* Show the hamburger button */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Hide the link list and turn it into a drop-down panel */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--color-navy);
+    padding: 8px 16px 16px;
+    box-shadow: var(--shadow);
+  }
+
+  /* main.js adds the "open" class when the hamburger is clicked */
+  .nav-links.open {
+    display: flex;
+  }
+
+  .hero {
+    padding: 36px 0 32px;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .two-columns,
+  .pros-cons {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .timeline-step {
+    padding-left: 56px;
+  }
+
+  .timeline::before {
+    left: 18px;
+  }
+
+  .step-number {
+    width: 39px;
+    height: 39px;
+    font-size: 1rem;
+  }
+}

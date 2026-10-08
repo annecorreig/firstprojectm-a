@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ==============================================================
+       HEAD: information for the browser (not shown on the page)
+       - charset: lets the page show symbols like € and →
+       - viewport: makes the page scale properly on phones
+       - Google Fonts: loads the "Inter" font
+       - style.css: our single stylesheet
+       ============================================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how companies are valued in mergers and acquisitions, and try the main valuation methods with interactive calculators.">
+  <title>M&amp;A Valuation Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- "defer" means: download now, but run after the HTML is ready -->
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- ==============================================================
+       HEADER + NAVIGATION (identical on every page)
+       aria-current="page" marks the page we are on so it is highlighted.
+       ============================================================== -->
+  <header class="site-header">
+    <nav class="container nav-bar" aria-label="Main navigation">
+      <a href="index.html" class="logo">M&amp;A <span class="logo-accent">Valuation</span> Lab</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="methods.html">Methods</a></li>
+        <li><a href="calculators.html">Calculators</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============================================================
+         HERO: big welcome banner
+         ============================================================ -->
+    <section class="hero">
+      <div class="container">
+        <h1>M&amp;A Valuation Lab</h1>
+        <p>Learn how companies are valued when one buys another, then try the main valuation methods yourself with interactive calculators.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         INTRO: what M&A valuation is and why it matters
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+        <h2>What is M&amp;A valuation?</h2>
+        <p>In a <strong>merger or acquisition (M&amp;A)</strong>, one company buys another company, or two companies combine. Before any money changes hands, both sides need to answer one question: <em>what is this business actually worth?</em></p>
+        <p><strong>Valuation</strong> is how they answer it. Analysts estimate the value of the target company using several methods. Some look at the cash the business will generate in the future. Some compare it with similar companies. Others look at what buyers paid in past deals. The result is not one "correct" number but a <strong>range of reasonable values</strong> that guides the negotiation.</p>
+
+        <h2>Why it matters</h2>
+        <div class="two-columns">
+          <!-- Buyer perspective card -->
+          <div class="card">
+            <h3>🏢 The buyer's view</h3>
+            <p>The buyer wants to pay as little as possible, and never more than the business is worth <em>to them</em>. That figure includes any <strong>synergies</strong>, meaning the extra savings or sales from combining the two companies. Pay too much and the buyer's shareholders lose money, even if the deal "succeeds".</p>
+          </div>
+          <!-- Seller perspective card -->
+          <div class="card">
+            <h3>🤝 The seller's view</h3>
+            <p>The seller's board has a duty to get the best price for its shareholders. It wants a <strong>control premium</strong>, which is a price above today's market value, as payment for handing over control of the company. Valuation tells the seller when an offer is too low to accept.</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p><strong>Negotiation:</strong> The final price usually lands somewhere between the seller's minimum (its standalone value) and the buyer's maximum (standalone value plus the synergies the buyer expects). Valuation sets the edges of that zone.</p>
+          <p><strong>Fairness opinions:</strong> Before a board approves a deal, it often hires an independent investment bank. The bank checks the valuation work and gives a <em>fairness opinion</em>, a letter stating that the price is fair "from a financial point of view". This protects the board and the shareholders.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION CARDS: one clickable card per part of the site
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+        <h2>Explore the lab</h2>
+        <div class="card-grid">
+          <a href="process.html" class="card card-link">
+            <div class="card-icon">🗺️</div>
+            <h3>The Valuation Process</h3>
+            <p>The 8 steps from strategic rationale to closing, each with common mistakes and an example.</p>
+            <span class="card-cta">See the steps →</span>
+          </a>
+          <a href="methods.html" class="card card-link">
+            <div class="card-icon">📐</div>
+            <h3>Valuation Methods</h3>
+            <p>DCF, trading comps, precedent transactions, LBO and asset-based valuation, with formulas and worked examples.</p>
+            <span class="card-cta">Learn the methods →</span>
+          </a>
+          <a href="calculators.html" class="card card-link">
+            <div class="card-icon">🧮</div>
+            <h3>Interactive Calculators</h3>
+            <p>Run a DCF, compute WACC, value with multiples, size synergies, test accretion/dilution and draw a football field.</p>
+            <span class="card-cta">Start calculating →</span>
+          </a>
+          <a href="glossary.html" class="card card-link">
+            <div class="card-icon">📖</div>
+            <h3>Glossary</h3>
+            <p>Plain-English definitions of more than 30 key terms, with instant search.</p>
+            <span class="card-cta">Look up a term →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==============================================================
+       FOOTER (identical on every page)
+       ============================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="disclaimer">For educational purposes only. Not financial advice.</p>
+      <p>© <span id="current-year">2026</span> M&amp;A Valuation Lab · All figures on this site are made up for teaching.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

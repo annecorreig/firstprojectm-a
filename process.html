@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- HEAD: same set-up as every page (see index.html for details) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The M&A valuation process in 8 steps, from strategic rationale to closing.">
+  <title>The Valuation Process · M&amp;A Valuation Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- HEADER + NAVIGATION (identical on every page; "Process" is highlighted) -->
+  <header class="site-header">
+    <nav class="container nav-bar" aria-label="Main navigation">
+      <a href="index.html" class="logo">M&amp;A <span class="logo-accent">Valuation</span> Lab</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="process.html" aria-current="page">Process</a></li>
+        <li><a href="methods.html">Methods</a></li>
+        <li><a href="calculators.html">Calculators</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO: page title -->
+    <section class="hero">
+      <div class="container">
+        <h1>The Valuation Process</h1>
+        <p>How a buyer gets from "we should buy that company" to a signed deal, in eight steps.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- Short note introducing the running example used in every step -->
+        <div class="callout">
+          <p><strong>Running example:</strong> <em>BuyerCo</em>, a packaging company, is thinking about acquiring <em>TargetCo</em>, a smaller competitor. All numbers are made up and in millions of dollars ($M).</p>
+        </div>
+
+        <!-- ==========================================================
+             TIMELINE: an ordered list (<ol>) because order matters.
+             Each <li> is one step: number circle, title, explanation,
+             "Common mistakes" box and an example box.
+             ========================================================== -->
+        <ol class="timeline">
+
+          <!-- STEP 1 -->
+          <li class="timeline-step">
+            <span class="step-number">1</span>
+            <h2>Define the deal objective and strategic rationale</h2>
+            <p>Before running any numbers, the buyer writes down <strong>why</strong> it wants this company. Possible reasons include entering a new market, buying technology, gaining customers, or cutting costs by combining operations. The rationale decides which synergies are realistic and which valuation methods matter most.</p>
+            <div class="mistake">
+              <p><strong>⚠️ Common mistakes</strong></p>
+              <p>Starting with "the target is cheap" instead of a clear strategic fit. Doing deals because competitors are doing them, or because management wants a bigger company ("empire building").</p>
+            </div>
+            <div class="example">
+              <p><strong>Example:</strong> BuyerCo wants TargetCo's 40 regional customers and expects to close 2 overlapping factories. Its objective: "Grow regional market share from 12% to 18% and lower unit costs."</p>
+            </div>
+          </li>
+
+          <!-- STEP 2 -->
+          <li class="timeline-step">
+            <span class="step-number">2</span>
+            <h2>Gather and analyze financial information</h2>
+            <p>This is <strong>due diligence</strong>: a detailed investigation of the target's accounts, contracts, customers, debts, legal risks and management. A key task is <strong>normalizing EBITDA</strong>. Analysts remove one-off items, such as a lawsuit settlement or a factory closure, so the earnings reflect what the business normally makes.</p>
+            <div class="mistake">
+              <p><strong>⚠️ Common mistakes</strong></p>
+              <p>Accepting the seller's "adjusted EBITDA" without checking it. Sellers like to label too many costs as "one-off". Another mistake is skipping working-capital and debt-like items such as unpaid pensions.</p>
+            </div>
+            <div class="example">
+              <p><strong>Example:</strong> TargetCo reports EBITDA of $70M. Diligence finds a $12M one-off legal charge (added back) and $2M of owner's personal expenses (added back), but also a $4M rent discount ending next year (deducted). Normalized EBITDA = 70 + 12 + 2 − 4 = <strong>$80M</strong>.</p>
+            </div>
+          </li>
+
+          <!-- STEP 3 -->
+          <li class="timeline-step">
+            <span class="step-number">3</span>
+            <h2>Build financial projections</h2>
+            <p>Analysts forecast revenue, costs, investment (capital expenditure, or capex) and <strong>free cash flow</strong> for the next 5 to 10 years. Projections should be tied to clear assumptions, such as market growth, pricing and margins, and checked against the company's past results.</p>
+            <div class="mistake">
+              <p><strong>⚠️ Common mistakes</strong></p>
+              <p>"Hockey-stick" forecasts, where growth suddenly speeds up right after the deal. Margins that improve every year with no explanation. Forgetting that growth needs extra investment in equipment and working capital.</p>
+            </div>
+            <div class="example">
+              <p><strong>Example:</strong> TargetCo's revenue grew 4% a year historically. The base case assumes 5% growth and free cash flow rising from $100M to $140M over 5 years. A downside case uses 2% growth, and an upside case uses 8%.</p>
+            </div>
+          </li>
+
+          <!-- STEP 4 -->
+          <li class="timeline-step">
+            <span class="step-number">4</span>
+            <h2>Apply multiple valuation methods</h2>
+            <p>No single method is reliable on its own. Analysts typically run a <a href="methods.html#dcf">DCF</a>, <a href="methods.html#comps">trading comparables</a>, <a href="methods.html#precedents">precedent transactions</a> and sometimes an <a href="methods.html#lbo">LBO</a> or <a href="methods.html#asset-based">asset-based</a> valuation. Each method shows the company from a different angle.</p>
+            <div class="mistake">
+              <p><strong>⚠️ Common mistakes</strong></p>
+              <p>Choosing peer companies that aren't really similar. Using a discount rate that doesn't match the target's risk. Mixing up enterprise value and equity value, for example by applying an EV multiple and forgetting to subtract debt.</p>
+            </div>
+            <div class="example">
+              <p><strong>Example:</strong> DCF gives TargetCo an enterprise value of $950M to $1,250M. Trading comps (8x to 11.5x EBITDA of $80M) give $640M to $920M. Precedent deals (10x to 13x) give $800M to $1,040M.</p>
+            </div>
+          </li>
+
+          <!-- STEP 5 -->
+          <li class="timeline-step">
+            <span class="step-number">5</span>
+            <h2>Estimate synergies and integration costs</h2>
+            <p><strong>Synergies</strong> are the extra value created by combining the companies. <strong>Cost synergies</strong> come from savings, such as closing duplicate offices or buying in bulk, and are usually more reliable. <strong>Revenue synergies</strong> come from selling more, for example cross-selling to each other's customers, and are much less certain. Getting synergies costs money up front, through severance, IT migration and rebranding. These are the <strong>integration costs</strong>.</p>
+            <div class="mistake">
+              <p><strong>⚠️ Common mistakes</strong></p>
+              <p>Counting revenue synergies at full value. Assuming savings arrive on day one instead of over 2 to 3 years. Leaving out integration costs and the risk that customers or key staff leave.</p>
+            </div>
+            <div class="example">
+              <p><strong>Example:</strong> Closing 2 factories saves $30M a year (cost synergy), and cross-selling may add $10M a year of profit (revenue synergy). The present value of all synergies is about $400M, but BuyerCo only expects to achieve 75% of that, or $300M. One-off integration costs are $60M.</p>
+            </div>
+          </li>
+
+          <!-- STEP 6 -->
+          <li class="timeline-step">
+            <span class="step-number">6</span>
+            <h2>Triangulate a valuation range (football field chart)</h2>
+            <p>The results of all methods are put side by side in a <strong>football field chart</strong>: a horizontal bar for each method showing its low-to-high range. Where the bars overlap is the most defensible value range. You can build one yourself in the <a href="calculators.html#football-field">football field calculator</a>.</p>
+            <div class="mistake">
+              <p><strong>⚠️ Common mistakes</strong></p>
+              <p>Simply averaging every method, even when one is clearly less relevant. Making ranges so wide they say nothing. Only showing the methods that support the price you already want.</p>
+            </div>
+            <div class="example">
+              <p><strong>Example:</strong> Most of TargetCo's bars (DCF, precedents and LBO) overlap between about $950M and $1,050M, so BuyerCo's team picks a standalone value of about <strong>$1,000M</strong> as the midpoint.</p>
+            </div>
+          </li>
+
+          <!-- STEP 7 -->
+          <li class="timeline-step">
+            <span class="step-number">7</span>
+            <h2>Determine the offer price, control premium, and deal structure</h2>
+            <p>The buyer sets an opening offer and a <strong>walk-away price</strong>. Public targets usually require a <strong>control premium</strong> of roughly 20 to 40% over the current share price. The buyer also chooses the <strong>deal structure</strong>. Paying in <em>cash</em> gives sellers certainty, and the buyer keeps all the upside. Paying in <em>stock</em> shares the risk (and the synergies) with the seller's shareholders. The <a href="calculators.html#accretion">accretion/dilution test</a> checks how the deal affects the buyer's earnings per share.</p>
+            <div class="mistake">
+              <p><strong>⚠️ Common mistakes</strong></p>
+              <p>Paying a premium larger than the expected net synergies, which means the buyer gives away more than the deal creates. Treating "EPS accretive" as proof that a deal creates value. Ignoring how the payment method changes the risk.</p>
+            </div>
+            <div class="example">
+              <p><strong>Example:</strong> Standalone value $1,000M + expected synergies $300M − integration costs $60M = walk-away price of <strong>$1,240M</strong>. BuyerCo offers a 20% premium ($1,200M), paid 50% in cash and 50% in BuyerCo shares.</p>
+            </div>
+          </li>
+
+          <!-- STEP 8 -->
+          <li class="timeline-step">
+            <span class="step-number">8</span>
+            <h2>Negotiate, fairness opinion, and closing</h2>
+            <p>The two sides negotiate price, payment method, protections such as an <em>earn-out</em> (extra payment only if targets are hit), and break-up fees. The target's board usually gets an independent <strong>fairness opinion</strong>. Then shareholders and regulators approve the deal, the money and shares change hands at <strong>closing</strong>, and integration begins.</p>
+            <div class="mistake">
+              <p><strong>⚠️ Common mistakes</strong></p>
+              <p>"Deal fever": raising the bid again and again in a competitive auction to avoid losing. Treating the fairness opinion as a formality. Not planning integration until after closing.</p>
+            </div>
+            <div class="example">
+              <p><strong>Example:</strong> After two rounds, the parties agree on $1,180M plus a $40M earn-out if TargetCo's EBITDA reaches $95M within 2 years. The fairness opinion confirms the price is within the valuation range, and the deal closes 4 months later.</p>
+            </div>
+          </li>
+        </ol>
+
+        <p>Ready to learn the methods behind step 4? <a href="methods.html">Go to Valuation Methods →</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (identical on every page) -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="disclaimer">For educational purposes only. Not financial advice.</p>
+      <p>© <span id="current-year">2026</span> M&amp;A Valuation Lab · All figures on this site are made up for teaching.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
