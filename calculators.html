@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- HEAD: same set-up as every page (see index.html for details),
+       plus calculators.js, which only this page needs. -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive M&A valuation calculators: DCF, WACC, comparable multiples, synergies, accretion/dilution and a football field chart.">
+  <title>Calculators · M&amp;A Valuation Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/calculators.js" defer></script>
+</head>
+<body>
+
+  <!-- HEADER + NAVIGATION (identical on every page; "Calculators" is highlighted) -->
+  <header class="site-header">
+    <nav class="container nav-bar" aria-label="Main navigation">
+      <a href="index.html" class="logo">M&amp;A <span class="logo-accent">Valuation</span> Lab</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="process.html">Process</a></li>
+        <li><a href="methods.html">Methods</a></li>
+        <li><a href="calculators.html" aria-current="page">Calculators</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO: page title -->
+    <section class="hero">
+      <div class="container">
+        <h1>Valuation Calculators</h1>
+        <p>Change the numbers and click <strong>Calculate</strong>. All money amounts are in millions of dollars ($M) unless stated otherwise.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- In-page menu linking to each calculator below -->
+        <ul class="page-nav">
+          <li><a href="#dcf">DCF</a></li>
+          <li><a href="#wacc">WACC</a></li>
+          <li><a href="#comps">Multiples</a></li>
+          <li><a href="#synergy">Synergies &amp; offer price</a></li>
+          <li><a href="#accretion">Accretion / dilution</a></li>
+          <li><a href="#football-field">Football field</a></li>
+        </ul>
+
+        <!-- ========================================================
+             HOW THE CALCULATORS WORK (for you, the code reader)
+             Each calculator is a <form>. When you click its
+             "Calculate" button (or press Enter), calculators.js:
+               1. reads the inputs using their id="..." names,
+               2. checks them and shows an error if something is wrong,
+               3. does the maths,
+               4. writes the results into the empty <div class="results">.
+             The value="..." on each input is its DEFAULT value.
+             ======================================================== -->
+
+        <!-- ========================================================
+             CALCULATOR A: DCF
+             ======================================================== -->
+        <article class="calculator card" id="dcf">
+          <h2>A. Discounted Cash Flow (DCF)</h2>
+          <p class="muted">Turns 5 years of forecast free cash flow into today's enterprise value, equity value and value per share.</p>
+
+          <form id="dcf-form" novalidate>
+            <fieldset>
+              <legend>Free cash flow forecast ($M)</legend>
+              <div class="input-grid">
+                <div class="input-group"><label for="dcf-fcf-1">Year 1</label><input type="number" id="dcf-fcf-1" value="100" step="any"></div>
+                <div class="input-group"><label for="dcf-fcf-2">Year 2</label><input type="number" id="dcf-fcf-2" value="110" step="any"></div>
+                <div class="input-group"><label for="dcf-fcf-3">Year 3</label><input type="number" id="dcf-fcf-3" value="120" step="any"></div>
+                <div class="input-group"><label for="dcf-fcf-4">Year 4</label><input type="number" id="dcf-fcf-4" value="130" step="any"></div>
+                <div class="input-group"><label for="dcf-fcf-5">Year 5</label><input type="number" id="dcf-fcf-5" value="140" step="any"></div>
+              </div>
+            </fieldset>
+
+            <div class="input-grid">
+              <div class="input-group">
+                <label for="dcf-wacc">WACC (%) <span class="hint">Discount rate</span></label>
+                <input type="number" id="dcf-wacc" value="10" step="any">
+              </div>
+              <div class="input-group">
+                <label for="dcf-growth">Terminal growth (%) <span class="hint">Long-term growth, e.g. 2–3%</span></label>
+                <input type="number" id="dcf-growth" value="2.5" step="any">
+              </div>
+              <div class="input-group">
+                <label for="dcf-net-debt">Net debt ($M) <span class="hint">Debt minus cash (negative = net cash)</span></label>
+                <input type="number" id="dcf-net-debt" value="200" step="any">
+              </div>
+              <div class="input-group">
+                <label for="dcf-shares">Shares outstanding (M) <span class="hint">In millions of shares</span></label>
+                <input type="number" id="dcf-shares" value="50" step="any">
+              </div>
+            </div>
+
+            <button type="submit" class="button">Calculate</button>
+          </form>
+
+          <!-- Results are written here by calculators.js -->
+          <div class="results" id="dcf-results" aria-live="polite"></div>
+
+          <details class="how-it-works">
+            <summary>How this works</summary>
+            <p>1. Each year's cash flow is divided by <code>(1 + WACC)^year</code> to get its <em>present value</em> (its value in today's money).</p>
+            <p>2. Terminal value (Gordon growth) = <code>Year-5 FCF × (1 + g) / (WACC − g)</code>. This is also discounted back 5 years.</p>
+            <p>3. Enterprise value = sum of discounted cash flows + discounted terminal value.</p>
+            <p>4. Equity value = enterprise value − net debt. Value per share = equity value ÷ shares.</p>
+            <p>Cash flows are assumed to arrive at the end of each year.</p>
+          </details>
+        </article>
+
+        <!-- ========================================================
+             CALCULATOR B: WACC
+             ======================================================== -->
+        <article class="calculator card" id="wacc">
+          <h2>B. WACC (Weighted Average Cost of Capital)</h2>
+          <p class="muted">The discount rate for a DCF: the blended return that shareholders and lenders expect.</p>
+
+          <form id="wacc-form" novalidate>
+            <div class="input-grid">
+              <div class="input-group">
+                <label for="wacc-equity">Equity value ($M) <span class="hint">Market value of shares</span></label>
+                <input type="number" id="wacc-equity" value="600" step="any">
+              </div>
+              <div class="input-group">
+                <label for="wacc-debt">Debt value ($M)</label>
+                <input type="number" id="wacc-debt" value="400" step="any">
+              </div>
+              <div class="input-group">
+                <label for="wacc-cost-of-debt">Cost of debt (%) <span class="hint">Pre-tax interest rate</span></label>
+                <input type="number" id="wacc-cost-of-debt" value="6" step="any">
+              </div>
+              <div class="input-group">
+                <label for="wacc-tax">Tax rate (%)</label>
+                <input type="number" id="wacc-tax" value="25" step="any">
+              </div>
+            </div>
+
+            <fieldset>
+              <legend>Cost of equity</legend>
+              <!-- When ticked, the CAPM inputs are used; when not, the direct input is used -->
+              <label class="checkbox-label"><input type="checkbox" id="wacc-use-capm" checked> Calculate cost of equity with CAPM</label>
+              <div class="input-grid">
+                <div class="input-group">
+                  <label for="wacc-cost-of-equity">Cost of equity (%) <span class="hint">Used if CAPM is unticked</span></label>
+                  <input type="number" id="wacc-cost-of-equity" value="10" step="any">
+                </div>
+                <div class="input-group">
+                  <label for="wacc-risk-free">Risk-free rate (%)</label>
+                  <input type="number" id="wacc-risk-free" value="4" step="any">
+                </div>
+                <div class="input-group">
+                  <label for="wacc-beta">Beta</label>
+                  <input type="number" id="wacc-beta" value="1.2" step="any">
+                </div>
+                <div class="input-group">
+                  <label for="wacc-market-premium">Market risk premium (%)</label>
+                  <input type="number" id="wacc-market-premium" value="5.5" step="any">
+                </div>
+              </div>
+            </fieldset>
+
+            <button type="submit" class="button">Calculate</button>
+          </form>
+
+          <div class="results" id="wacc-results" aria-live="polite"></div>
+
+          <details class="how-it-works">
+            <summary>How this works</summary>
+            <p>Cost of equity (CAPM) = <code>Risk-free rate + Beta × Market risk premium</code>.</p>
+            <p>Weights: equity weight = <code>E / (E + D)</code>, debt weight = <code>D / (E + D)</code>.</p>
+            <p>After-tax cost of debt = <code>Cost of debt × (1 − Tax rate)</code>, because interest reduces taxes.</p>
+            <p>WACC = <code>Equity weight × Cost of equity + Debt weight × After-tax cost of debt</code>.</p>
+          </details>
+        </article>
+
+        <!-- ========================================================
+             CALCULATOR C: COMPARABLE MULTIPLES
+             ======================================================== -->
+        <article class="calculator card" id="comps">
+          <h2>C. Comparable Multiples</h2>
+          <p class="muted">Applies the multiples of up to 4 peer companies to the target. Leave a peer's boxes empty to skip it.</p>
+
+          <form id="comps-form" novalidate>
+            <div class="input-grid">
+              <div class="input-group">
+                <label for="comps-ebitda">Target EBITDA ($M)</label>
+                <input type="number" id="comps-ebitda" value="80" step="any">
+              </div>
+              <div class="input-group">
+                <label for="comps-revenue">Target revenue ($M)</label>
+                <input type="number" id="comps-revenue" value="400" step="any">
+              </div>
+            </div>
+
+            <!-- Table of peer multiples: one row per peer -->
+            <div class="table-wrapper">
+              <table class="data-table range-table">
+                <thead>
+                  <tr><th scope="col">Peer</th><th scope="col">EV / EBITDA (x)</th><th scope="col">EV / Revenue (x)</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Peer 1</th>
+                    <td><input type="number" id="peer-ebitda-1" value="8" step="any" aria-label="Peer 1 EV/EBITDA"></td>
+                    <td><input type="number" id="peer-revenue-1" value="1.5" step="any" aria-label="Peer 1 EV/Revenue"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Peer 2</th>
+                    <td><input type="number" id="peer-ebitda-2" value="9.5" step="any" aria-label="Peer 2 EV/EBITDA"></td>
+                    <td><input type="number" id="peer-revenue-2" value="2.0" step="any" aria-label="Peer 2 EV/Revenue"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Peer 3</th>
+                    <td><input type="number" id="peer-ebitda-3" value="10" step="any" aria-label="Peer 3 EV/EBITDA"></td>
+                    <td><input type="number" id="peer-revenue-3" value="2.2" step="any" aria-label="Peer 3 EV/Revenue"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Peer 4</th>
+                    <td><input type="number" id="peer-ebitda-4" value="11.5" step="any" aria-label="Peer 4 EV/EBITDA"></td>
+                    <td><input type="number" id="peer-revenue-4" value="2.6" step="any" aria-label="Peer 4 EV/Revenue"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button type="submit" class="button">Calculate</button>
+          </form>
+
+          <div class="results" id="comps-results" aria-live="polite"></div>
+
+          <details class="how-it-works">
+            <summary>How this works</summary>
+            <p>For each type of multiple, the calculator finds the <strong>lowest</strong>, <strong>median</strong> (middle value) and <strong>highest</strong> peer multiple.</p>
+            <p>Implied enterprise value = <code>Target metric × Multiple</code>, for example <code>$80M EBITDA × 9.75x = $780M</code>.</p>
+            <p>With an even number of peers, the median is the average of the two middle values. The median is used because a single unusual peer affects it less than it affects the average.</p>
+          </details>
+        </article>
+
+        <!-- ========================================================
+             CALCULATOR D: SYNERGIES & OFFER PRICE
+             ======================================================== -->
+        <article class="calculator card" id="synergy">
+          <h2>D. Synergies &amp; Offer Price</h2>
+          <p class="muted">What's the most a buyer should pay, and who keeps the value created by the deal?</p>
+
+          <form id="synergy-form" novalidate>
+            <div class="input-grid">
+              <div class="input-group">
+                <label for="synergy-standalone">Standalone value of target ($M) <span class="hint">Value without the deal</span></label>
+                <input type="number" id="synergy-standalone" value="1000" step="any">
+              </div>
+              <div class="input-group">
+                <label for="synergy-amount">Expected synergies ($M) <span class="hint">Present value, if fully achieved</span></label>
+                <input type="number" id="synergy-amount" value="400" step="any">
+              </div>
+              <div class="input-group">
+                <label for="synergy-probability">Probability of achieving them (%)</label>
+                <input type="number" id="synergy-probability" value="75" step="any">
+              </div>
+              <div class="input-group">
+                <label for="synergy-integration">Integration costs ($M)</label>
+                <input type="number" id="synergy-integration" value="60" step="any">
+              </div>
+              <div class="input-group">
+                <label for="synergy-premium">Control premium offered (%) <span class="hint">Above standalone value</span></label>
+                <input type="number" id="synergy-premium" value="20" step="any">
+              </div>
+            </div>
+
+            <button type="submit" class="button">Calculate</button>
+          </form>
+
+          <div class="results" id="synergy-results" aria-live="polite"></div>
+
+          <details class="how-it-works">
+            <summary>How this works</summary>
+            <p>Risk-adjusted synergies = <code>Synergies × Probability</code>.</p>
+            <p>Net synergies = <code>Risk-adjusted synergies − Integration costs</code>. This is the value the deal creates.</p>
+            <p>Maximum sensible price = <code>Standalone value + Net synergies</code>. Paying more than this destroys value for the buyer.</p>
+            <p>Offer price = <code>Standalone value × (1 + Premium)</code>. The premium goes to the <strong>seller</strong>. Whatever is left of the net synergies stays with the <strong>buyer</strong>.</p>
+          </details>
+        </article>
+
+        <!-- ========================================================
+             CALCULATOR E: ACCRETION / DILUTION
+             ======================================================== -->
+        <article class="calculator card" id="accretion">
+          <h2>E. Accretion / Dilution (simple)</h2>
+          <p class="muted">Does buying the target raise (accretive) or lower (dilutive) the buyer's earnings per share in year 1?</p>
+
+          <form id="accretion-form" novalidate>
+            <div class="input-grid">
+              <div class="input-group">
+                <label for="acc-buyer-eps">Buyer EPS ($ per share)</label>
+                <input type="number" id="acc-buyer-eps" value="5" step="any">
+              </div>
+              <div class="input-group">
+                <label for="acc-buyer-shares">Buyer shares (M)</label>
+                <input type="number" id="acc-buyer-shares" value="100" step="any">
+              </div>
+              <div class="input-group">
+                <label for="acc-target-income">Target net income ($M)</label>
+                <input type="number" id="acc-target-income" value="60" step="any">
+              </div>
+              <div class="input-group">
+                <label for="acc-price">Purchase price ($M)</label>
+                <input type="number" id="acc-price" value="1000" step="any">
+              </div>
+              <div class="input-group">
+                <label for="acc-stock-percent">% paid in stock <span class="hint">The rest is paid with new debt</span></label>
+                <input type="number" id="acc-stock-percent" value="50" step="any">
+              </div>
+              <div class="input-group">
+                <label for="acc-share-price">Buyer share price ($)</label>
+                <input type="number" id="acc-share-price" value="80" step="any">
+              </div>
+              <div class="input-group">
+                <label for="acc-interest">Interest rate on new debt (%)</label>
+                <input type="number" id="acc-interest" value="6" step="any">
+              </div>
+              <div class="input-group">
+                <label for="acc-tax">Tax rate (%) <span class="hint">Interest is tax-deductible</span></label>
+                <input type="number" id="acc-tax" value="25" step="any">
+              </div>
+            </div>
+
+            <button type="submit" class="button">Calculate</button>
+          </form>
+
+          <div class="results" id="accretion-results" aria-live="polite"></div>
+
+          <details class="how-it-works">
+            <summary>How this works</summary>
+            <p>Buyer net income = <code>Buyer EPS × Buyer shares</code>.</p>
+            <p>Stock part: new shares issued = <code>Price × % stock ÷ Buyer share price</code>.</p>
+            <p>Cash part is borrowed: after-tax interest = <code>Price × % cash × Interest rate × (1 − Tax rate)</code>.</p>
+            <p>Pro forma EPS = <code>(Buyer net income + Target net income − After-tax interest) ÷ (Buyer shares + New shares)</code>.</p>
+            <p>If pro forma EPS is above the buyer's current EPS, the deal is <em>accretive</em>. Remember: accretive does <strong>not</strong> automatically mean the deal creates value. This simple version also ignores fees, synergies and lost interest on cash.</p>
+          </details>
+        </article>
+
+        <!-- ========================================================
+             CALCULATOR F: FOOTBALL FIELD CHART
+             The chart is drawn by JavaScript on the <canvas> element.
+             ======================================================== -->
+        <article class="calculator card" id="football-field">
+          <h2>F. Football Field Chart</h2>
+          <p class="muted">Enter a low and high value for each method to compare the ranges side by side. Leave a row empty to hide it.</p>
+
+          <form id="football-form" novalidate>
+            <div class="table-wrapper">
+              <table class="data-table range-table">
+                <thead>
+                  <tr><th scope="col">Method</th><th scope="col">Low ($M)</th><th scope="col">High ($M)</th></tr>
+                </thead>
+                <tbody>
+                  <!-- Each row: method name, low value, high value. Ids end in the row number 1–5. -->
+                  <tr>
+                    <td><input type="text" id="ff-name-1" value="DCF" aria-label="Method 1 name"></td>
+                    <td><input type="number" id="ff-low-1" value="950" step="any" aria-label="Method 1 low"></td>
+                    <td><input type="number" id="ff-high-1" value="1250" step="any" aria-label="Method 1 high"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" id="ff-name-2" value="Trading comps" aria-label="Method 2 name"></td>
+                    <td><input type="number" id="ff-low-2" value="640" step="any" aria-label="Method 2 low"></td>
+                    <td><input type="number" id="ff-high-2" value="920" step="any" aria-label="Method 2 high"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" id="ff-name-3" value="Precedents" aria-label="Method 3 name"></td>
+                    <td><input type="number" id="ff-low-3" value="800" step="any" aria-label="Method 3 low"></td>
+                    <td><input type="number" id="ff-high-3" value="1040" step="any" aria-label="Method 3 high"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" id="ff-name-4" value="LBO" aria-label="Method 4 name"></td>
+                    <td><input type="number" id="ff-low-4" value="850" step="any" aria-label="Method 4 low"></td>
+                    <td><input type="number" id="ff-high-4" value="1050" step="any" aria-label="Method 4 high"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" id="ff-name-5" value="Asset-based" aria-label="Method 5 name"></td>
+                    <td><input type="number" id="ff-low-5" value="400" step="any" aria-label="Method 5 low"></td>
+                    <td><input type="number" id="ff-high-5" value="550" step="any" aria-label="Method 5 high"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="input-grid">
+              <div class="input-group">
+                <label for="ff-offer">Offer price ($M) <span class="hint">Optional: drawn as a dashed line</span></label>
+                <input type="number" id="ff-offer" value="1000" step="any">
+              </div>
+            </div>
+
+            <button type="submit" class="button">Draw chart</button>
+          </form>
+
+          <div class="results" id="football-results" aria-live="polite"></div>
+
+          <!-- The drawing surface. role="img" + aria-label describe the chart
+               to screen-reader users; JavaScript updates the label. -->
+          <div class="chart-wrapper">
+            <canvas id="football-field-canvas" role="img" aria-label="Football field chart of valuation ranges"></canvas>
+          </div>
+
+          <details class="how-it-works">
+            <summary>How this works</summary>
+            <p>Each bar starts at a method's low value and ends at its high value, on a shared dollar scale. Where several bars overlap is the most defensible value range. The dashed line shows the offer price, so you can see whether it sits inside, above or below each method's range.</p>
+            <p>The chart is drawn with the HTML <code>&lt;canvas&gt;</code> element and plain JavaScript. Read <code>drawFootballField()</code> in <code>js/calculators.js</code> to see how.</p>
+          </details>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (identical on every page) -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="disclaimer">For educational purposes only. Not financial advice.</p>
+      <p>© <span id="current-year">2026</span> M&amp;A Valuation Lab · All figures on this site are made up for teaching.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
